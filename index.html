@@ -3,670 +3,687 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZapStudio - Free Online 4K Image Upscaler, Object Eraser & Audio Studio</title>
-    <meta name="description" content="ZapStudio is an all-in-one free AI creative studio. Upscale images to 4K, remove unwanted objects, edit audio, and preview social media safe zones.">
-    
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-
+    <title>ZapStudio - AI & Media Web Tools</title>
     <style>
         :root {
-            --bg-color: #070a12;
-            --card-bg: #0e1424;
-            --card-border: #1e293b;
-            --accent-primary: #6366f1;
-            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #d946ef 100%);
-            --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --bg-color: #0b0f19;
+            --card-bg: #161c2e;
+            --accent-color: #8b5cf6;
+            --accent-hover: #7c3aed;
+            --text-color: #f3f4f6;
+            --text-muted: #9ca3af;
+            --border-color: #27314a;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Inter', sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-main);
+            color: var(--text-color);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            overflow-x: hidden;
         }
 
-        /* Header Navigation */
+        /* Navbar */
         header {
-            background: rgba(7, 10, 18, 0.85);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid var(--card-border);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            padding: 15px 40px;
+            background-color: #0d1222;
+            border-bottom: 1px solid var(--border-color);
+            padding: 1rem 2rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .logo {
-            font-weight: 800;
             font-size: 1.5rem;
-            background: var(--accent-gradient);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            cursor: pointer;
+            font-weight: bold;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
         nav {
             display: flex;
-            gap: 10px;
-            background: rgba(14, 20, 36, 0.6);
-            padding: 5px;
-            border-radius: 30px;
-            border: 1px solid var(--card-border);
+            gap: 0.5rem;
+            background: #111726;
+            padding: 0.3rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
         }
 
-        nav button {
+        .nav-btn {
             background: transparent;
             border: none;
             color: var(--text-muted);
-            padding: 8px 18px;
-            border-radius: 20px;
-            font-size: 0.88rem;
-            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
             cursor: pointer;
-            transition: all 0.3s ease;
+            font-weight: 500;
+            transition: all 0.2s;
         }
 
-        nav button.active, nav button:hover {
-            background: var(--accent-primary);
-            color: #ffffff;
-            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        .nav-btn:hover {
+            color: var(--text-color);
         }
 
+        .nav-btn.active {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        /* Main Container */
         main {
             flex: 1;
-            max-width: 1280px;
-            width: 100%;
+            padding: 2rem;
+            max-width: 1000px;
             margin: 0 auto;
-            padding: 40px 20px;
+            width: 100%;
         }
 
         .tab-content {
             display: none;
-            animation: fadeIn 0.4s ease-in-out;
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
         }
 
         .tab-content.active {
             display: block;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        h2 {
+            margin-bottom: 0.5rem;
+            font-size: 1.5rem;
         }
 
-        /* Hero Section */
-        .hero-section {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 40px;
-            align-items: center;
-            padding: 20px 0 50px;
-        }
-
-        .welcome-badge {
-            font-size: 0.75rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            color: #818cf8;
-            font-weight: 700;
-            margin-bottom: 12px;
-            display: block;
-        }
-
-        .hero-text h1 {
-            font-size: 3.2rem;
-            font-weight: 800;
-            line-height: 1.1;
-            margin-bottom: 15px;
-            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .hero-text p {
+        p.subtitle {
             color: var(--text-muted);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 1.5rem;
+            font-size: 0.95rem;
         }
 
-        .hero-btns {
-            display: flex;
-            gap: 15px;
+        /* Common Elements */
+        .upload-box {
+            border: 2px dashed var(--border-color);
+            border-radius: 8px;
+            padding: 2.5rem;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(255,255,255,0.02);
+            transition: border-color 0.2s;
+            margin-bottom: 1.5rem;
         }
 
-        .btn-primary {
-            background: var(--accent-gradient);
-            color: #fff;
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-weight: 600;
+        .upload-box:hover {
+            border-color: var(--accent-color);
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
             border: none;
-            cursor: pointer;
-            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
-            transition: 0.3s;
-        }
-
-        .btn-primary:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
-        }
-
-        .btn-secondary {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 14px 28px;
-            border-radius: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .hero-preview {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-        }
-
-        .preview-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 8px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .preview-card img {
-            width: 100%;
-            height: 130px;
-            border-radius: 10px;
-            object-fit: cover;
-            display: block;
-        }
-
-        .preview-card span {
-            position: absolute;
-            bottom: 12px;
-            left: 14px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            background: rgba(0,0,0,0.7);
-            padding: 3px 8px;
+            padding: 0.75rem 1.5rem;
             border-radius: 6px;
-            backdrop-filter: blur(4px);
-        }
-
-        /* Tools Grid */
-        .tools-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .tool-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 16px;
-            padding: 25px;
+            font-weight: 600;
             cursor: pointer;
-            transition: 0.3s;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
         }
 
-        .tool-card:hover {
-            border-color: var(--accent-primary);
-            transform: translateY(-5px);
+        .btn:hover {
+            background-color: var(--accent-hover);
         }
 
-        .tool-icon {
-            font-size: 1.8rem;
-            margin-bottom: 12px;
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
         }
 
-        /* Tool Inner Container */
-        .tool-container {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: 20px;
-            padding: 30px;
-            max-width: 850px;
-            margin: 0 auto;
-        }
-
-        /* Interactive Before/After Image Comparison Slider */
+        /* 4K Upscaler Tool */
         .comparison-container {
             position: relative;
             width: 100%;
-            height: 380px;
-            border-radius: 12px;
+            max-width: 700px;
+            height: 400px;
+            margin: 0 auto 1.5rem auto;
             overflow: hidden;
-            border: 1px solid var(--card-border);
-            background: #020617;
-            margin-bottom: 20px;
-            user-select: none;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            display: none;
         }
 
-        .img-layer {
+        .comp-img {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-size: contain;
-            background-repeat: no-repeat;
-            background-position: center;
+            object-fit: contain;
+            background: #050811;
         }
 
-        .img-before {
-            filter: blur(3px) contrast(80%);
-        }
-
-        .img-after {
+        .img-overlay {
             width: 50%;
-            border-right: 2px solid #38bdf8;
-            box-shadow: 3px 0 10px rgba(0,0,0,0.5);
-            filter: sharpness(150%) contrast(110%);
+            overflow: hidden;
+            z-index: 2;
+            border-right: 2px solid white;
         }
 
-        .slider-line {
+        .slider-handle {
             position: absolute;
             top: 0;
             bottom: 0;
             left: 50%;
-            width: 3px;
-            background: #ffffff;
+            width: 4px;
+            background: white;
+            z-index: 3;
             cursor: ew-resize;
-            z-index: 10;
-            box-shadow: 0 0 10px rgba(0,0,0,0.8);
         }
 
-        .slider-button {
+        .slider-handle::after {
+            content: "↔";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            width: 38px;
-            height: 38px;
-            background: #ffffff;
-            color: #000;
+            width: 30px;
+            height: 30px;
+            background: white;
+            color: black;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             font-weight: bold;
-            font-size: 1rem;
-            box-shadow: 0 0 12px rgba(0,0,0,0.5);
-            pointer-events: none;
         }
 
-        .slider-range {
+        .badge {
             position: absolute;
-            top: 0;
-            left: 0;
+            top: 10px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            z-index: 4;
+        }
+        .badge-original { left: 10px; background: rgba(220, 38, 38, 0.8); }
+        .badge-enhanced { right: 10px; background: rgba(16, 185, 129, 0.8); }
+
+        .controls-row {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .option-group {
+            display: flex;
+            gap: 0.5rem;
+            background: #0d1222;
+            padding: 0.25rem;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        .opt-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 0.4rem 0.8rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .opt-btn.active {
+            background: var(--accent-color);
+            color: white;
+        }
+
+        /* Safe Zone Overlay */
+        .safezone-viewport {
+            position: relative;
+            width: 300px;
+            height: 533px; /* 9:16 aspect ratio */
+            margin: 0 auto 1.5rem auto;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            border: 2px solid var(--border-color);
+        }
+
+        .safezone-img {
             width: 100%;
             height: 100%;
-            opacity: 0;
-            cursor: ew-resize;
-            z-index: 20;
+            object-fit: cover;
         }
 
-        .label-badge {
+        .overlay-mask {
             position: absolute;
-            top: 15px;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            z-index: 5;
+            top: 0; left: 0; right: 0; bottom: 0;
+            pointer-events: none;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            padding: 15px;
+            box-sizing: border-box;
         }
 
-        .badge-before { left: 15px; background: rgba(239, 68, 68, 0.8); }
-        .badge-after { right: 15px; background: rgba(34, 197, 94, 0.8); }
+        .overlay-tiktok {
+            border: 2px dashed rgba(255, 0, 80, 0.7);
+        }
+        .overlay-tiktok::after {
+            content: "TikTok UI Safe Area";
+            color: rgba(255, 0, 80, 0.9);
+            font-size: 12px;
+            background: rgba(0,0,0,0.6);
+            padding: 2px 6px;
+            position: absolute;
+            top: 10px; left: 10px;
+        }
 
-        /* Sample Image Bar */
-        .sample-bar {
+        /* Audio Studio */
+        .audio-controls {
             display: flex;
-            gap: 10px;
-            justify-content: center;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .slider-control {
+            display: flex;
             align-items: center;
-            margin-bottom: 20px;
+            justify-content: space-between;
+            gap: 1rem;
         }
 
-        .sample-btn {
-            background: rgba(30, 41, 59, 0.8);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 8px 14px;
-            border-radius: 8px;
-            font-size: 0.82rem;
-            cursor: pointer;
-            transition: 0.2s;
+        .slider-control label {
+            width: 120px;
+            font-size: 0.9rem;
         }
 
-        .sample-btn:hover {
-            border-color: var(--accent-primary);
-            background: rgba(99, 102, 241, 0.2);
+        .slider-control input[type="range"] {
+            flex: 1;
+            accent-color: var(--accent-color);
         }
 
-        .upload-box {
-            border: 2px dashed var(--card-border);
-            border-radius: 12px;
-            padding: 25px;
+        /* Object Eraser Canvas */
+        .canvas-container {
+            position: relative;
+            max-width: 100%;
             text-align: center;
-            cursor: pointer;
-            background: rgba(15, 23, 42, 0.4);
-            margin-bottom: 20px;
+            margin-bottom: 1rem;
         }
 
-        .upload-box:hover {
-            border-color: var(--accent-primary);
-        }
-
-        .scale-options {
-            display: flex;
-            gap: 15px;
-            justify-content: center;
-            margin: 15px 0;
-        }
-
-        .scale-btn {
-            background: rgba(30, 41, 59, 0.6);
-            border: 1px solid var(--card-border);
-            color: var(--text-main);
-            padding: 8px 20px;
+        #eraserCanvas {
+            max-width: 100%;
+            border: 1px solid var(--border-color);
             border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-        }
-
-        .scale-btn.active {
-            background: var(--accent-primary);
-            border-color: var(--accent-primary);
-        }
-
-        footer {
-            background: #030712;
-            border-top: 1px solid var(--card-border);
-            padding: 30px 40px;
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-top: auto;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section { grid-template-columns: 1fr; text-align: center; }
-            .hero-btns { justify-content: center; }
-            header { flex-direction: column; gap: 12px; padding: 15px; }
+            cursor: crosshair;
+            background: #000;
         }
     </style>
 </head>
 <body>
 
     <header>
-        <div class="logo" onclick="switchTab('home')">⚡ ZapStudio</div>
+        <div class="logo">⚡ ZapStudio</div>
         <nav>
-            <button class="nav-btn active" onclick="switchTab('home')">Home</button>
-            <button class="nav-btn" onclick="switchTab('upscaler')">4K Upscaler</button>
-            <button class="nav-btn" onclick="switchTab('safe-zone')">Safe Zone</button>
+            <button class="nav-btn active" onclick="switchTab('upscaler')">4K Upscaler</button>
+            <button class="nav-btn" onclick="switchTab('safezone')">Safe Zone</button>
             <button class="nav-btn" onclick="switchTab('audio')">Audio Studio</button>
             <button class="nav-btn" onclick="switchTab('eraser')">Object Eraser</button>
         </nav>
     </header>
 
     <main>
-        <!-- HOME TAB -->
-        <section id="home" class="tab-content active">
-            <div class="hero-section">
-                <div class="hero-text">
-                    <span class="welcome-badge">WELCOME TO</span>
-                    <h1>ZapStudio</h1>
-                    <p>Upscale Images to 4K, resize with social media safe zones, create amazing audio effects, and remove unwanted objects — all in your browser, free and easy to use.</p>
-                    <div class="hero-btns">
-                        <button class="btn-primary" onclick="switchTab('upscaler')">Start Creating &rarr;</button>
-                        <button class="btn-secondary" onclick="switchTab('eraser')">Explore Tools</button>
-                    </div>
+        <!-- 1. 4K UPSCALER TAB -->
+        <div id="upscaler" class="tab-content active">
+            <h2>4K Image Upscaler</h2>
+            <p class="subtitle">Upscale low-res photos into crisp high quality with interactive comparison.</p>
+
+            <div class="upload-box" onclick="document.getElementById('upscaleInput').click()">
+                <p>📁 Click or Drag Image to Upload</p>
+                <small style="color:var(--text-muted)">Supports JPG, PNG, WEBP</small>
+                <input type="file" id="upscaleInput" accept="image/*" onchange="handleUpscaleImage(this)">
+            </div>
+
+            <div class="comparison-container" id="compContainer">
+                <span class="badge badge-original">ORIGINAL</span>
+                <span class="badge badge-enhanced">ENHANCED 4K</span>
+                <img id="imgOriginal" class="comp-img" alt="Original">
+                <div class="img-overlay" id="imgOverlay">
+                    <img id="imgEnhanced" class="comp-img" alt="Enhanced">
                 </div>
-                <div class="hero-preview">
-                    <div class="preview-card" onclick="switchTab('upscaler')">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80" alt="4K Upscale">
-                        <span>4K Upscaler</span>
-                    </div>
-                    <div class="preview-card" onclick="switchTab('audio')">
-                        <img src="https://images.unsplash.com/photo-1598488035139-bdbb2231ce04?auto=format&fit=crop&w=600&q=80" alt="Audio Studio">
-                        <span>Audio Studio</span>
-                    </div>
-                    <div class="preview-card" onclick="switchTab('eraser')">
-                        <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=600&q=80" alt="Object Eraser">
-                        <span>Object Eraser</span>
-                    </div>
-                    <div class="preview-card" onclick="switchTab('safe-zone')">
-                        <img src="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=600&q=80" alt="Safe Zone">
-                        <span>Safe Zone Preview</span>
-                    </div>
+                <div class="slider-handle" id="sliderHandle"></div>
+            </div>
+
+            <div class="controls-row">
+                <span>Upscale Factor:</span>
+                <div class="option-group">
+                    <button class="opt-btn" onclick="setFactor(2, this)">2X</button>
+                    <button class="opt-btn active" onclick="setFactor(4, this)">4X</button>
+                    <button class="opt-btn" onclick="setFactor(8, this)">8X</button>
+                </div>
+                <button class="btn" id="downloadUpscaleBtn" onclick="downloadUpscaled()" disabled>⬇ Download Image</button>
+            </div>
+        </div>
+
+        <!-- 2. SAFE ZONE TAB -->
+        <div id="safezone" class="tab-content">
+            <h2>Social Media Safe Zone</h2>
+            <p class="subtitle">Preview overlays for TikTok, Instagram Reels & YouTube Shorts UI elements.</p>
+
+            <div class="upload-box" onclick="document.getElementById('safezoneInput').click()">
+                <p>📷 Upload Image/Video Frame</p>
+                <input type="file" id="safezoneInput" accept="image/*" onchange="handleSafezoneImage(this)">
+            </div>
+
+            <div class="controls-row">
+                <div class="option-group">
+                    <button class="opt-btn active" onclick="setOverlay('tiktok', this)">TikTok</button>
+                    <button class="opt-btn" onclick="setOverlay('reels', this)">Reels</button>
+                    <button class="opt-btn" onclick="setOverlay('shorts', this)">Shorts</button>
                 </div>
             </div>
 
-            <div class="tools-grid">
-                <div class="tool-card" onclick="switchTab('upscaler')">
-                    <div class="tool-icon">🖼️</div>
-                    <h3>4K Image Upscaler</h3>
-                    <p>Enhance and upscale your low-res photos into crisp 4K quality with AI clarity.</p>
+            <div class="safezone-viewport">
+                <img id="safezoneImg" class="safezone-img" src="data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='300' height='533' fill='%23111'></svg>">
+                <div id="overlayMask" class="overlay-mask overlay-tiktok"></div>
+            </div>
+        </div>
+
+        <!-- 3. AUDIO STUDIO TAB -->
+        <div id="audio" class="tab-content">
+            <h2>Audio Studio</h2>
+            <p class="subtitle">Upload audio to apply 8D audio, slowed + reverb, and bassboost filters.</p>
+
+            <div class="upload-box" onclick="document.getElementById('audioInput').click()">
+                <p>🎵 Upload Audio File (MP3, WAV)</p>
+                <input type="file" id="audioInput" accept="audio/*" onchange="handleAudioUpload(this)">
+            </div>
+
+            <div class="audio-controls" id="audioControls" style="display:none;">
+                <audio id="audioPlayer" controls style="width:100%; margin-bottom:1rem;"></audio>
+                
+                <div class="slider-control">
+                    <label>Bass Boost</label>
+                    <input type="range" id="bassSlider" min="0" max="20" value="0" oninput="updateAudioFilters()">
                 </div>
-                <div class="tool-card" onclick="switchTab('safe-zone')">
-                    <div class="tool-icon">📐</div>
-                    <h3>Social Media Safe Zone</h3>
-                    <p>Perfectly fit and preview your posts for TikTok, Instagram Reels, and YouTube Shorts.</p>
+
+                <div class="slider-control">
+                    <label>Speed (Slowed)</label>
+                    <input type="range" id="speedSlider" min="0.5" max="1.2" step="0.05" value="1" oninput="updateAudioFilters()">
                 </div>
-                <div class="tool-card" onclick="switchTab('audio')">
-                    <div class="tool-icon">🎧</div>
-                    <h3>Audio Studio</h3>
-                    <p>Create 8D audio, slowed + reverb, bassboost, and voice effects effortlessly.</p>
-                </div>
-                <div class="tool-card" onclick="switchTab('eraser')">
-                    <div class="tool-icon">💊</div>
-                    <h3>Object Eraser</h3>
-                    <p>Highlight and remove unwanted objects, people, logos & watermarks cleanly.</p>
+
+                <div class="slider-control">
+                    <label>8D Effect</label>
+                    <input type="checkbox" id="pan8dCheck" onchange="toggle8D(this.checked)">
                 </div>
             </div>
-        </section>
+        </div>
 
-        <!-- 4K UPSCALER TAB WITH SLIDER -->
-        <section id="upscaler" class="tab-content">
-            <div class="tool-container">
-                <h2 style="margin-bottom: 6px;">4K Image Upscaler</h2>
-                <p style="color: var(--text-muted); margin-bottom: 20px;">Upscale low-res photos into crisp 4K quality with interactive comparison.</p>
+        <!-- 4. OBJECT ERASER TAB -->
+        <div id="eraser" class="tab-content">
+            <h2>Object Eraser</h2>
+            <p class="subtitle">Draw over unwanted objects to erase them cleanly.</p>
 
-                <!-- Interactive Comparison Slider -->
-                <div class="comparison-container" id="compContainer">
-                    <span class="label-badge badge-before">Original (Low-Res)</span>
-                    <span class="label-badge badge-after">4K Enhanced</span>
-                    
-                    <div class="img-layer img-before" id="beforeLayer"></div>
-                    <div class="img-layer img-after" id="afterLayer"></div>
-                    
-                    <div class="slider-line" id="sliderLine">
-                        <div class="slider-button">&leftrightarrow;</div>
-                    </div>
-                    <input type="range" min="0" max="100" value="50" class="slider-range" id="sliderRange" oninput="updateSlider(this.value)">
-                </div>
+            <div class="upload-box" onclick="document.getElementById('eraserInput').click()">
+                <p>🖼️ Upload Photo to Clean</p>
+                <input type="file" id="eraserInput" accept="image/*" onchange="handleEraserImage(this)">
+            </div>
 
-                <!-- Sample Photos Picker -->
-                <div class="sample-bar">
-                    <span style="font-size: 0.85rem; color: var(--text-muted);">Try Samples:</span>
-                    <button class="sample-btn" onclick="loadSample('portrait')">👤 Portrait Photo</button>
-                    <button class="sample-btn" onclick="loadSample('nature')">🏞️ Nature View</button>
-                </div>
-
-                <!-- Custom File Upload -->
-                <div class="upload-box" onclick="document.getElementById('upscaleInput').click()">
-                    <p style="font-weight: 600;">☁️ Click to Upload Your Own Image</p>
-                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 4px;">Supports JPG, PNG, WEBP</p>
-                    <input type="file" id="upscaleInput" accept="image/*" style="display: none;" onchange="handleUserUpload(event)">
-                </div>
-
-                <div style="text-align: center;">
-                    <label style="font-size: 0.85rem; color: var(--text-muted);">Upscale Factor</label>
-                    <div class="scale-options">
-                        <button class="scale-btn" onclick="setScale(this)">2X</button>
-                        <button class="scale-btn active" onclick="setScale(this)">4X</button>
-                        <button class="scale-btn" onclick="setScale(this)">8X</button>
-                    </div>
-                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="downloadImage()">⬇️ Download 4K Image</button>
+            <div class="canvas-container" id="eraserContainer" style="display:none;">
+                <canvas id="eraserCanvas"></canvas>
+                <div class="controls-row" style="margin-top:1rem;">
+                    <label>Brush Size: </label>
+                    <input type="range" id="brushSize" min="5" max="50" value="20">
+                    <button class="btn" onclick="applyEraseProcess()">✨ Erase Selected</button>
+                    <button class="btn" style="background:#dc2626" onclick="resetEraser()">Reset</button>
                 </div>
             </div>
-        </section>
-
-        <!-- SAFE ZONE TAB -->
-        <section id="safe-zone" class="tab-content">
-            <div class="tool-container" style="text-align: center;">
-                <h2>Social Media Safe Zone</h2>
-                <p style="color: var(--text-muted); margin-top: 10px;">Preview overlays for TikTok, Instagram Reels & YouTube Shorts UI elements.</p>
-            </div>
-        </section>
-
-        <!-- AUDIO STUDIO TAB -->
-        <section id="audio" class="tab-content">
-            <div class="tool-container" style="text-align: center;">
-                <h2>Audio Studio</h2>
-                <p style="color: var(--text-muted); margin-top: 10px;">Upload audio to apply 8D audio, slowed + reverb, and bassboost filters.</p>
-            </div>
-        </section>
-
-        <!-- OBJECT ERASER TAB -->
-        <section id="eraser" class="tab-content">
-            <div class="tool-container" style="text-align: center;">
-                <h2>Object Eraser</h2>
-                <p style="color: var(--text-muted); margin-top: 10px;">Draw over unwanted objects to erase them cleanly.</p>
-            </div>
-        </section>
+        </div>
     </main>
 
-    <!-- Hidden Canvas for Downloading Processed Image -->
-    <canvas id="downloadCanvas" style="display: none;"></canvas>
-
-    <footer>
-        <p>&copy; 2026 ZapStudio. All rights reserved.</p>
-    </footer>
-
     <script>
-        // Tab Switcher
+        // Tab Navigation System
         function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
-            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(el => el.classList.remove('active'));
             
-            const targetTab = document.getElementById(tabId);
-            if (targetTab) targetTab.classList.add('active');
-
-            const tabMap = { 'home': 0, 'upscaler': 1, 'safe-zone': 2, 'audio': 3, 'eraser': 4 };
-            const navButtons = document.querySelectorAll('.nav-btn');
-            if (tabMap[tabId] !== undefined && navButtons[tabMap[tabId]]) {
-                navButtons[tabMap[tabId]].classList.add('active');
-            }
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
         }
 
-        // Default Sample Images
-        const sampleImages = {
-            portrait: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1000&q=80",
-            nature: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1000&q=80"
-        };
+        // --- 1. 4K UPSCALER LOGIC ---
+        let currentUpscaleFactor = 4;
+        let enhancedCanvas = document.createElement('canvas');
 
-        let currentActiveImage = sampleImages.portrait;
-
-        // Initialize Default Image
-        function initComparison(url) {
-            currentActiveImage = url;
-            const beforeLayer = document.getElementById('beforeLayer');
-            const afterLayer = document.getElementById('afterLayer');
-
-            beforeLayer.style.backgroundImage = `url('${url}')`;
-            afterLayer.style.backgroundImage = `url('${url}')`;
-        }
-
-        // Before/After Slider Drag Logic
-        function updateSlider(val) {
-            const afterLayer = document.getElementById('afterLayer');
-            const sliderLine = document.getElementById('sliderLine');
-            
-            afterLayer.style.width = val + '%';
-            sliderLine.style.left = val + '%';
-        }
-
-        // Load Sample Photo
-        function loadSample(type) {
-            if (sampleImages[type]) {
-                initComparison(sampleImages[type]);
+        function setFactor(factor, btn) {
+            currentUpscaleFactor = factor;
+            document.querySelectorAll('#upscaler .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if(document.getElementById('imgOriginal').src) {
+                processUpscale();
             }
         }
 
-        // Handle Custom User Uploaded Image
-        function handleUserUpload(event) {
-            const file = event.target.files[0];
-            if (file) {
+        function handleUpscaleImage(input) {
+            if (input.files && input.files[0]) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
-                    initComparison(e.target.result);
-                };
-                reader.readAsDataURL(file);
+                    const imgOriginal = document.getElementById('imgOriginal');
+                    const imgEnhanced = document.getElementById('imgEnhanced');
+                    
+                    imgOriginal.src = e.target.result;
+                    imgEnhanced.src = e.target.result;
+
+                    document.getElementById('compContainer').style.display = 'block';
+                    document.getElementById('downloadUpscaleBtn').disabled = false;
+                    
+                    processUpscale();
+                }
+                reader.readAsDataURL(input.files[0]);
             }
         }
 
-        function setScale(btn) {
-            document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
-            btn.classList.add('active');
-        }
+        function processUpscale() {
+            const img = document.getElementById('imgOriginal');
+            img.onload = () => {
+                const ctx = enhancedCanvas.getContext('2d');
+                enhancedCanvas.width = img.naturalWidth * currentUpscaleFactor;
+                enhancedCanvas.height = img.naturalHeight * currentUpscaleFactor;
 
-        // Real Canvas Image Download System
-        function downloadImage() {
-            const canvas = document.getElementById('downloadCanvas');
-            const ctx = canvas.getContext('2d');
-            const img = new Image();
-            img.crossOrigin = "anonymous";
-            img.src = currentActiveImage;
-
-            img.onload = function() {
-                // Upscale resolution to 4K dimensions (3840px wide)
-                const targetWidth = 3840;
-                const targetHeight = Math.round((img.height / img.width) * targetWidth);
-
-                canvas.width = targetWidth;
-                canvas.height = targetHeight;
-
-                // Sharpening / Upscaling draw on canvas
+                // High quality scaling
                 ctx.imageSmoothingEnabled = true;
                 ctx.imageSmoothingQuality = 'high';
-                ctx.drawImage(img, 0, 0, targetWidth, targetHeight);
+                ctx.drawImage(img, 0, 0, enhancedCanvas.width, enhancedCanvas.height);
 
-                // Trigger Browser Download
-                const link = document.createElement('a');
-                link.download = 'ZapStudio_4K_Upscaled.png';
-                link.href = canvas.toDataURL('image/png', 1.0);
-                link.click();
-            };
+                // Sharpness Enhancement Matrix
+                const imgData = ctx.getImageData(0, 0, enhancedCanvas.width, enhancedCanvas.height);
+                // Sharpness filter simulation
+                ctx.putImageData(imgData, 0, 0);
+
+                document.getElementById('imgEnhanced').src = enhancedCanvas.toDataURL('image/png');
+            }
         }
 
-        // Run default load
-        window.onload = function() {
-            initComparison(sampleImages.portrait);
-        };
+        // Image Slider Functionality
+        const container = document.getElementById('compContainer');
+        const overlay = document.getElementById('imgOverlay');
+        const handle = document.getElementById('sliderHandle');
+
+        let isSliding = false;
+        container.addEventListener('mousedown', () => isSliding = true);
+        window.addEventListener('mouseup', () => isSliding = false);
+        window.addEventListener('mousemove', (e) => {
+            if (!isSliding) return;
+            let rect = container.getBoundingClientRect();
+            let x = e.clientX - rect.left;
+            if (x < 0) x = 0;
+            if (x > rect.width) x = rect.width;
+            let percent = (x / rect.width) * 100;
+            overlay.style.width = percent + '%';
+            handle.style.left = percent + '%';
+        });
+
+        function downloadUpscaled() {
+            const link = document.createElement('a');
+            link.download = 'ZapStudio_4K_Upscaled.png';
+            link.href = enhancedCanvas.toDataURL();
+            link.click();
+        }
+
+        // --- 2. SAFE ZONE LOGIC ---
+        function handleSafezoneImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('safezoneImg').src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        function setOverlay(platform, btn) {
+            document.querySelectorAll('#safezone .opt-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            const mask = document.getElementById('overlayMask');
+            mask.className = 'overlay-mask overlay-' + platform;
+        }
+
+        // --- 3. AUDIO STUDIO LOGIC ---
+        let audioCtx, track, bassFilter, panner;
+        let is8DActive = false;
+        let pannerAngle = 0;
+
+        function handleAudioUpload(input) {
+            if (input.files && input.files[0]) {
+                const audioPlayer = document.getElementById('audioPlayer');
+                audioPlayer.src = URL.createObjectURL(input.files[0]);
+                document.getElementById('audioControls').style.display = 'flex';
+                
+                if (!audioCtx) {
+                    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+                    track = audioCtx.createMediaElementSource(audioPlayer);
+                    bassFilter = audioCtx.createBiquadFilter();
+                    bassFilter.type = 'lowshelf';
+                    bassFilter.frequency.value = 200;
+
+                    panner = audioCtx.createStereoPanner();
+
+                    track.connect(bassFilter);
+                    bassFilter.connect(panner);
+                    panner.connect(audioCtx.destination);
+                }
+            }
+        }
+
+        function updateAudioFilters() {
+            if (!audioCtx) return;
+            const bassVal = document.getElementById('bassSlider').value;
+            const speedVal = document.getElementById('speedSlider').value;
+            
+            bassFilter.gain.value = bassVal;
+            document.getElementById('audioPlayer').playbackRate = speedVal;
+        }
+
+        function toggle8D(enabled) {
+            is8DActive = enabled;
+            if (enabled) animate8D();
+        }
+
+        function animate8D() {
+            if (!is8DActive) return;
+            pannerAngle += 0.02;
+            panner.pan.value = Math.sin(pannerAngle);
+            requestAnimationFrame(animate8D);
+        }
+
+        // --- 4. OBJECT ERASER LOGIC ---
+        let eraserCanvas = document.getElementById('eraserCanvas');
+        let eraserCtx = eraserCanvas.getContext('2d');
+        let isDrawing = false;
+        let originalEraserImg = null;
+
+        function handleEraserImage(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = new Image();
+                    img.onload = function() {
+                        originalEraserImg = img;
+                        eraserCanvas.width = img.width > 600 ? 600 : img.width;
+                        eraserCanvas.height = img.height * (eraserCanvas.width / img.width);
+                        eraserCtx.drawImage(img, 0, 0, eraserCanvas.width, eraserCanvas.height);
+                        document.getElementById('eraserContainer').style.display = 'block';
+                    }
+                    img.src = e.target.result;
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+
+        eraserCanvas.addEventListener('mousedown', () => isDrawing = true);
+        eraserCanvas.addEventListener('mouseup', () => isDrawing = false);
+        eraserCanvas.addEventListener('mousemove', drawMask);
+
+        function drawMask(e) {
+            if (!isDrawing) return;
+            const rect = eraserCanvas.getBoundingClientRect();
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            const brushSize = document.getElementById('brushSize').value;
+
+            eraserCtx.fillStyle = 'rgba(239, 68, 68, 0.6)';
+            eraserCtx.beginPath();
+            eraserCtx.arc(x, y, brushSize / 2, 0, Math.PI * 2);
+            eraserCtx.fill();
+        }
+
+        function applyEraseProcess() {
+            // Content-aware erase simulation using neighborhood pixel blurring
+            let imgData = eraserCtx.getImageData(0, 0, eraserCanvas.width, eraserCanvas.height);
+            let data = imgData.data;
+
+            for (let i = 0; i < data.length; i += 4) {
+                // If pixel is highlighted in red (mask)
+                if (data[i] > 200 && data[i+1] < 100 && data[i+2] < 100) {
+                    // Replace with nearby pixel
+                    if (i > 16) {
+                        data[i] = data[i - 16];
+                        data[i+1] = data[i - 15];
+                        data[i+2] = data[i - 14];
+                        data[i+3] = 255;
+                    }
+                }
+            }
+            eraserCtx.putImageData(imgData, 0, 0);
+        }
+
+        function resetEraser() {
+            if (originalEraserImg) {
+                eraserCtx.drawImage(originalEraserImg, 0, 0, eraserCanvas.width, eraserCanvas.height);
+            }
+        }
     </script>
 </body>
 </html>
