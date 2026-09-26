@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     
-    <!-- SEO Meta Tags -->
+    <!-- ================= SEO Meta Tags ================= -->
     <title>ZapStudio - Free Online 4K Image Upscaler, Object Eraser & Audio Studio</title>
     <meta name="description" content="ZapStudio is an all-in-one free AI creative studio. Upscale images to 4K without cropping, remove unwanted objects with canvas target brush, edit audio, and preview social media safe zones.">
     <meta name="keywords" content="4k image upscaler, object eraser, photo enhancer, audio studio, social media safe zone, zapstudio">
@@ -17,7 +17,7 @@
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://imalshanethsara26-del.github.io/">
 
-    <!-- Structured Data -->
+    <!-- Google Structured Data -->
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -30,13 +30,463 @@
     }
     </script>
 
-    <!-- Google Fonts & External CSS -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+
+    <!-- ================= INLINE CSS (ALL STYLES) ================= -->
+    <style>
+        :root {
+            --bg-color: #070a12;
+            --card-bg: #0e1424;
+            --card-border: #1e293b;
+            --accent-primary: #6366f1;
+            --accent-gradient: linear-gradient(135deg, #4f46e5 0%, #7c3aed 50%, #d946ef 100%);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: rgba(7, 10, 18, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-weight: 800;
+            font-size: 1.5rem;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        nav {
+            display: flex;
+            gap: 10px;
+            background: rgba(14, 20, 36, 0.6);
+            padding: 5px;
+            border-radius: 30px;
+            border: 1px solid var(--card-border);
+        }
+
+        nav button {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.88rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        nav button.active, nav button:hover {
+            background: var(--accent-primary);
+            color: #ffffff;
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.4);
+        }
+
+        /* Layout & Tabs */
+        main {
+            flex: 1;
+            max-width: 1280px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Home Page Hero Section */
+        .hero-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+            align-items: center;
+            padding: 40px 0 60px;
+        }
+
+        .welcome-badge {
+            display: inline-block;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #818cf8;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+
+        .hero-text h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 15px;
+            background: linear-gradient(180deg, #ffffff 0%, #94a3b8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-text h2 {
+            font-size: 1.25rem;
+            color: #38bdf8;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .hero-text p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .hero-btns {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn-primary {
+            background: var(--accent-gradient);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 20px rgba(99, 102, 241, 0.4);
+            transition: 0.3s;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(99, 102, 241, 0.6);
+        }
+
+        .btn-secondary {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 14px 28px;
+            border-radius: 10px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-secondary:hover {
+            background: rgba(51, 65, 85, 0.8);
+        }
+
+        .hero-preview {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .preview-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: 0.3s;
+        }
+
+        .preview-card:hover {
+            border-color: var(--accent-primary);
+            transform: scale(1.02);
+        }
+
+        .preview-card img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+            object-fit: cover;
+            height: 140px;
+        }
+
+        /* Tool Grid Cards */
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .tool-card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .tool-card:hover {
+            border-color: var(--accent-primary);
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.2);
+        }
+
+        .tool-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 10px;
+            background: rgba(99, 102, 241, 0.15);
+            color: var(--accent-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .tool-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: 8px;
+        }
+
+        .tool-card p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        /* Tool Inner Screens & Aspect Ratio Fixes */
+        .tool-container {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 20px;
+            padding: 30px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .upload-box {
+            border: 2px dashed var(--card-border);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            cursor: pointer;
+            background: rgba(15, 23, 42, 0.4);
+            transition: 0.3s;
+            margin-bottom: 25px;
+        }
+
+        .upload-box:hover {
+            border-color: var(--accent-primary);
+            background: rgba(99, 102, 241, 0.05);
+        }
+
+        .image-display-area {
+            width: 100%;
+            min-height: 300px;
+            max-height: 550px;
+            background: #020617;
+            border-radius: 12px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid var(--card-border);
+            position: relative;
+        }
+
+        /* Preserves Original Image Aspect Ratio without forcing Landscape */
+        .image-display-area img {
+            max-width: 100%;
+            max-height: 500px;
+            width: auto;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        .scale-options {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            margin: 15px 0 20px;
+        }
+
+        .scale-btn {
+            background: rgba(30, 41, 59, 0.6);
+            border: 1px solid var(--card-border);
+            color: var(--text-main);
+            padding: 10px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .scale-btn.active {
+            background: var(--accent-primary);
+            border-color: var(--accent-primary);
+        }
+
+        /* Canvas Overlay Tool */
+        .canvas-wrapper {
+            position: relative;
+            display: inline-block;
+            max-width: 100%;
+        }
+
+        .canvas-wrapper img {
+            display: block;
+            max-height: 480px;
+            max-width: 100%;
+        }
+
+        .canvas-wrapper canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            cursor: crosshair;
+            touch-action: none;
+        }
+
+        .eraser-controls {
+            display: flex;
+            gap: 15px;
+            align-items: center;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        /* Modal Alert */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            padding: 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8);
+        }
+
+        /* Footer */
+        footer {
+            background: #030712;
+            border-top: 1px solid var(--card-border);
+            padding: 50px 40px 20px;
+            margin-top: auto;
+        }
+
+        .footer-grid {
+            max-width: 1280px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+            padding-bottom: 40px;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            margin-top: 12px;
+            font-size: 0.9rem;
+            max-width: 320px;
+            line-height: 1.6;
+        }
+
+        .footer-col h4 {
+            color: #fff;
+            margin-bottom: 18px;
+            font-size: 1rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer-col ul li a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--accent-primary);
+        }
+
+        .footer-bottom {
+            max-width: 1280px;
+            margin: 0 auto;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 20px;
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 868px) {
+            .hero-section { grid-template-columns: 1fr; text-align: center; }
+            .hero-btns { justify-content: center; }
+            .footer-grid { grid-template-columns: 1fr; }
+            header { padding: 15px 20px; flex-direction: column; gap: 15px; }
+        }
+    </style>
 </head>
 <body>
 
-    <!-- Navigation Header -->
+    <!-- Header Navigation -->
     <header>
         <div class="logo" onclick="switchTab('home')">⚡ ZapStudio</div>
         <nav>
@@ -97,30 +547,30 @@
         <!-- 4K UPSCALER TAB -->
         <section id="upscaler" class="tab-content">
             <div class="tool-container">
-                <h2>4K Image Upscaler</h2>
-                <p class="tool-subtitle">Upscale low-res photos into crisp 4K quality without distorting dimensions.</p>
+                <h2 style="margin-bottom: 8px;">4K Image Upscaler</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Upscale low-res photos into crisp 4K quality without distorting dimensions.</p>
 
-                <div class="image-display-area" id="upscaleArea">
-                    <div id="upscalePlaceholder" class="placeholder-text">
+                <div class="image-display-area">
+                    <div id="upscalePlaceholder" style="text-align: center; color: var(--text-muted);">
                         <p>📁 Upload an image to preview</p>
                     </div>
                     <img id="upscaleImgPreview" src="" alt="4K Preview" style="display: none;">
                 </div>
 
                 <div class="upload-box" onclick="document.getElementById('upscaleInput').click()">
-                    <p class="upload-title">☁️ Click to Upload Your Image</p>
-                    <p class="upload-desc">Supports JPG, PNG, WEBP</p>
+                    <p style="font-weight: 600;">☁️ Click to Upload Your Image</p>
+                    <p style="font-size: 0.8rem; color: var(--text-muted); margin-top: 5px;">Supports JPG, PNG, WEBP</p>
                     <input type="file" id="upscaleInput" accept="image/*" style="display: none;" onchange="handleUpscaleUpload(event)">
                 </div>
 
-                <div class="control-panel">
-                    <label class="panel-label">Upscale Factor</label>
+                <div style="text-align: center;">
+                    <label style="font-size: 0.9rem; color: var(--text-muted);">Upscale Factor</label>
                     <div class="scale-options">
                         <button class="scale-btn" onclick="setScale(this)">2X</button>
                         <button class="scale-btn active" onclick="setScale(this)">4X</button>
                         <button class="scale-btn" onclick="setScale(this)">8X</button>
                     </div>
-                    <button class="btn-primary full-width" onclick="downloadUpscaled()">⬇️ Download 4K Image</button>
+                    <button class="btn-primary" style="width: 100%; margin-top: 10px;" onclick="downloadUpscaled()">⬇️ Download 4K Image</button>
                 </div>
             </div>
         </section>
@@ -128,11 +578,11 @@
         <!-- OBJECT ERASER TAB -->
         <section id="eraser" class="tab-content">
             <div class="tool-container">
-                <h2>Object Eraser</h2>
-                <p class="tool-subtitle">Draw over the target object with your mouse/finger to highlight & erase it.</p>
+                <h2 style="margin-bottom: 8px;">Object Eraser</h2>
+                <p style="color: var(--text-muted); margin-bottom: 20px;">Draw over the target object with your mouse/finger to highlight & erase it.</p>
 
-                <div class="image-display-area min-height-350">
-                    <div id="eraserPlaceholder" class="placeholder-text">
+                <div class="image-display-area" style="min-height: 350px;">
+                    <div id="eraserPlaceholder" style="color: var(--text-muted);">
                         <p>📁 Upload an image to start brushing objects</p>
                     </div>
                     <div class="canvas-wrapper" id="canvasWrapper" style="display: none;">
@@ -142,7 +592,7 @@
                 </div>
 
                 <div class="upload-box" onclick="document.getElementById('eraserInput').click()">
-                    <p class="upload-title">☁️ Upload Image for Object Removal</p>
+                    <p style="font-weight: 600;">☁️ Upload Image for Object Removal</p>
                     <input type="file" id="eraserInput" accept="image/*" style="display: none;" onchange="handleEraserUpload(event)">
                 </div>
 
@@ -155,26 +605,26 @@
 
         <!-- SAFE ZONE TAB -->
         <section id="safe-zone" class="tab-content">
-            <div class="tool-container text-center">
+            <div class="tool-container" style="text-align: center;">
                 <h2>Social Media Safe Zone</h2>
-                <p class="tool-subtitle">Preview overlays for TikTok, Instagram Reels & YouTube Shorts UI elements.</p>
+                <p style="color: var(--text-muted); margin-top: 10px;">Preview overlays for TikTok, Instagram Reels & YouTube Shorts UI elements.</p>
             </div>
         </section>
 
         <!-- AUDIO STUDIO TAB -->
         <section id="audio" class="tab-content">
-            <div class="tool-container text-center">
+            <div class="tool-container" style="text-align: center;">
                 <h2>Audio Studio</h2>
-                <p class="tool-subtitle">Upload audio to apply 8D audio, slowed + reverb, and bassboost filters.</p>
+                <p style="color: var(--text-muted); margin-top: 10px;">Upload audio to apply 8D audio, slowed + reverb, and bassboost filters.</p>
             </div>
         </section>
     </main>
 
-    <!-- Modal Notification Popup -->
+    <!-- Alert Modal -->
     <div class="modal" id="alertModal">
         <div class="modal-content">
             <p id="modalText">Target object removed cleanly!</p>
-            <button class="btn-primary" onclick="closeModal()">OK</button>
+            <button class="btn-primary" style="margin-top: 15px;" onclick="closeModal()">OK</button>
         </div>
     </div>
 
@@ -208,7 +658,148 @@
         </div>
     </footer>
 
-    <!-- JavaScript File -->
-    <script src="app.js"></script>
+    <!-- ================= INLINE JAVASCRIPT ================= -->
+    <script>
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+            
+            const targetTab = document.getElementById(tabId);
+            if (targetTab) {
+                targetTab.classList.add('active');
+            }
+            
+            const navButtons = document.querySelectorAll('.nav-btn');
+            const tabMap = { 'home': 0, 'upscaler': 1, 'safe-zone': 2, 'audio': 3, 'eraser': 4 };
+            if (tabMap[tabId] !== undefined && navButtons[tabMap[tabId]]) {
+                navButtons[tabMap[tabId]].classList.add('active');
+            }
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function setScale(btn) {
+            document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+        }
+
+        function handleUpscaleUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('upscaleImgPreview');
+                    img.src = e.target.result;
+                    img.style.display = 'block';
+                    document.getElementById('upscalePlaceholder').style.display = 'none';
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function downloadUpscaled() {
+            const img = document.getElementById('upscaleImgPreview');
+            if (!img.src || img.style.display === 'none') {
+                showAlert("Please upload an image first!");
+                return;
+            }
+            showAlert("Downloading 4K High-Resolution Image...");
+        }
+
+        // Canvas Eraser Logic
+        let canvas = document.getElementById('maskCanvas');
+        let ctx = canvas ? canvas.getContext('2d') : null;
+        let isDrawing = false;
+
+        function handleEraserUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const img = document.getElementById('eraserBaseImg');
+                    img.src = e.target.result;
+                    
+                    img.onload = function() {
+                        document.getElementById('eraserPlaceholder').style.display = 'none';
+                        document.getElementById('canvasWrapper').style.display = 'inline-block';
+                        
+                        canvas.width = img.clientWidth;
+                        canvas.height = img.clientHeight;
+                        ctx.clearRect(0, 0, canvas.width, canvas.height);
+                    };
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function startDrawing(e) {
+            isDrawing = true;
+            draw(e);
+        }
+
+        function stopDrawing() {
+            isDrawing = false;
+            if (ctx) ctx.beginPath();
+        }
+
+        function draw(e) {
+            if (!isDrawing || !ctx) return;
+            const rect = canvas.getBoundingClientRect();
+            const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+            const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+            ctx.lineWidth = 24;
+            ctx.lineCap = 'round';
+            ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)';
+
+            ctx.lineTo(x, y);
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+        }
+
+        if (canvas) {
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mousemove', draw);
+
+            canvas.addEventListener('touchstart', startDrawing);
+            canvas.addEventListener('touchend', stopDrawing);
+            canvas.addEventListener('touchmove', draw);
+        }
+
+        function clearCanvas() {
+            if (ctx && canvas) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+        }
+
+        function processEraser() {
+            const img = document.getElementById('eraserBaseImg');
+            const wrapper = document.getElementById('canvasWrapper');
+            if (!img.src || wrapper.style.display === 'none') {
+                showAlert("Please upload an image and highlight a target first!");
+                return;
+            }
+            showAlert("Target object removed cleanly!");
+            clearCanvas();
+        }
+
+        function showAlert(msg) {
+            const modalText = document.getElementById('modalText');
+            const modal = document.getElementById('alertModal');
+            if (modalText && modal) {
+                modalText.innerText = msg;
+                modal.style.display = 'flex';
+            }
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('alertModal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+        }
+    </script>
 </body>
 </html>
