@@ -1,35 +1,30 @@
-/* Custom Glows & 3D Tilt Effect for ZapStudio */
+/* Custom Styles for ZapStudio */
 .hero-tilt {
-    transform: perspective(1000px) rotateY(-10deg) rotateX(6deg) rotateZ(-3deg);
+    transform: perspective(1000px) rotateY(-8deg) rotateX(4deg) rotateZ(-2deg);
     transition: all 0.5s ease-out;
 }
+@media (max-width: 768px) {
+    .hero-tilt {
+        transform: none !important; /* Mobile එකේදී Screen එකෙන් පිටට යන්නේ නැතිවෙන්න */
+    }
+}
 .hero-tilt:hover {
-    transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) rotateZ(0deg);
+    transform: perspective(1000px) rotateY(0deg) rotateX(0deg) rotateZ(0deg);
 }
 
+/* Active Nav Tab */
 .active-tab {
     background-color: rgba(99, 102, 241, 0.2);
     color: #818CF8;
-    border-bottom: 2px solid #6366F1;
-}
-
-.platform-btn.active {
-    border-color: #6366F1;
-    background-color: rgba(99, 102, 241, 0.25);
-    color: #ffffff;
-}
-
-.effect-btn.active {
-    border-color: #818CF8;
-    background-color: rgba(99, 102, 241, 0.3);
+    border: 1px solid rgba(99, 102, 241, 0.4);
 }
 
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
 }
 ::-webkit-scrollbar-track {
-    background: #0B0F19;
+    background: #080B11;
 }
 ::-webkit-scrollbar-thumb {
     background: #1E293B;
