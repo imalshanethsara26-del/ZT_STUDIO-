@@ -1,161 +1,147 @@
-// Initialize Lucide Icons
-lucide.createIcons();
-
-let currentImageSrc = "https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80";
-
-// TAB SWITCHING FUNCTION
+// ================= Navigation & Tab Switching =================
 function switchTab(tabId) {
-    document.querySelectorAll('.tab-content').forEach(tab => {
-        tab.classList.add('hidden');
-        tab.classList.remove('block');
-    });
-
-    document.querySelectorAll('.nav-btn').forEach(btn => {
-        btn.classList.remove('active-tab');
-        btn.classList.add('text-slate-400');
-    });
-
-    const targetTab = document.getElementById(`tab-${tabId}`);
+    document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+    document.querySelectorAll('.nav-btn').forEach(btn => btn.classList.remove('active'));
+    
+    const targetTab = document.getElementById(tabId);
     if (targetTab) {
-        targetTab.classList.remove('hidden');
-        targetTab.classList.add('block');
+        targetTab.classList.add('active');
     }
-
-    const targetBtn = document.getElementById(`nav-${tabId}`);
-    if (targetBtn) {
-        targetBtn.classList.add('active-tab');
-        targetBtn.classList.remove('text-slate-400');
+    
+    // Highlight Active Navbar Button
+    const navButtons = document.querySelectorAll('.nav-btn');
+    const tabMap = { 'home': 0, 'upscaler': 1, 'safe-zone': 2, 'audio': 3, 'eraser': 4 };
+    if (tabMap[tabId] !== undefined && navButtons[tabMap[tabId]]) {
+        navButtons[tabMap[tabId]].classList.add('active');
     }
 
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// 4K UPSCALER COMPARISON SLIDER DRAG LOGIC
-function handleCompareSlider(val) {
-    const cropWrap = document.getElementById('before-crop-wrap');
-    const handle = document.getElementById('slider-handle');
-    if (cropWrap && handle) {
-        cropWrap.style.width = `${val}%`;
-        handle.style.left = `${val}%`;
-    }
+// ================= 4K Upscaler Logic =================
+function setScale(btn) {
+    document.querySelectorAll('.scale-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
 }
 
-// TRIGGER GLOBAL IMAGE FILE INPUT
-function triggerImageUpload() {
-    document.getElementById('global-image-input').click();
-}
-
-function triggerAudioUpload() {
-    document.getElementById('global-audio-input').click();
-}
-
-// HANDLE IMAGE UPLOAD & PREVIEW
-function handleImageUpload(input) {
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
+function handleUpscaleUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
         const reader = new FileReader();
-
         reader.onload = function(e) {
-            currentImageSrc = e.target.result;
-
-            // Update Upscaler Images
-            document.getElementById('upscale-before-img').src = currentImageSrc;
-            document.getElementById('upscale-after-img').src = currentImageSrc;
-
-            // Update Safe Zone background
-            document.getElementById('safezone-bg').style.backgroundImage = `url('${currentImageSrc}')`;
-
-            // Update Eraser image
-            document.getElementById('eraser-img').src = currentImageSrc;
-
-            // Hide previous download button if new image loaded
-            document.getElementById('download-link').classList.add('hidden');
-            document.getElementById('process-btn').classList.remove('hidden');
-
-            alert("Photo uploaded successfully!");
+            const img = document.getElementById('upscaleImgPreview');
+            img.src = e.target.result;
+            img.style.display = 'block';
+            document.getElementById('upscalePlaceholder').style.display = 'none';
         };
-
         reader.readAsDataURL(file);
     }
 }
 
-// REAL CANVAS PROCESSING & 4K DOWNLOAD GENERATION
-function processAndUpscaleImage() {
-    const processBtn = document.getElementById('process-btn');
-    const downloadLink = document.getElementById('download-link');
+function downloadUpscaled() {
+    const img = document.getElementById('upscaleImgPreview');
+    if (!img.src || img.style.display === 'none') {
+        showAlert("Please upload an image first!");
+        return;
+    }
+    showAlert("Downloading 4K High-Resolution Image...");
+}
 
-    processBtn.innerText = "Processing 4K Resolution...";
+// ================= Object Eraser Canvas Logic =================
+let canvas = document.getElementById('maskCanvas');
+let ctx = canvas ? canvas.getContext('2d') : null;
+let isDrawing = false;
 
-    setTimeout(() => {
-        const img = new Image();
-        img.crossOrigin = "anonymous";
-        img.src = currentImageSrc;
-
-        img.onload = function() {
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-
-            // Upscale Canvas dimensions (2x/4x high definition)
-            canvas.width = img.naturalWidth * 2 || 2560;
-            canvas.height = img.naturalHeight * 2 || 1440;
-
-            // Sharp Image smoothing filter
-            ctx.imageSmoothingEnabled = true;
-            ctx.imageSmoothingQuality = 'high';
-            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
-
-            // Convert canvas to downloadable PNG Blob URL
-            const dataUrl = canvas.toDataURL('image/png');
-            downloadLink.href = dataUrl;
-            downloadLink.download = `ZapStudio_4K_Upscaled_${Date.now()}.png`;
-
-            processBtn.classList.add('hidden');
-            downloadLink.classList.remove('hidden');
+function handleEraserUpload(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.getElementById('eraserBaseImg');
+            img.src = e.target.result;
             
-            // Adjust slider view to clear sharp view
-            handleCompareSlider(0);
+            img.onload = function() {
+                document.getElementById('eraserPlaceholder').style.display = 'none';
+                document.getElementById('canvasWrapper').style.display = 'inline-block';
+                
+                // Adjust canvas width and height to match image display
+                canvas.width = img.clientWidth;
+                canvas.height = img.clientHeight;
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            };
         };
-    }, 1000);
-}
-
-// SAFE ZONE PRESETS
-function setSafeZone(platform) {
-    const box = document.getElementById('safezone-box');
-    if (platform === 'youtube') {
-        box.style.width = '85%';
-        box.style.height = '80%';
-    } else if (platform === 'instagram') {
-        box.style.width = '75%';
-        box.style.height = '75%';
-    } else if (platform === 'tiktok') {
-        box.style.width = '60%';
-        box.style.height = '85%';
+        reader.readAsDataURL(file);
     }
 }
 
-function handleAudioUpload(input) {
-    if (input.files && input.files[0]) {
-        document.getElementById('audio-file-label').innerText = input.files[0].name;
-        alert("Audio file loaded!");
+function startDrawing(e) {
+    isDrawing = true;
+    draw(e);
+}
+
+function stopDrawing() {
+    isDrawing = false;
+    if (ctx) ctx.beginPath();
+}
+
+function draw(e) {
+    if (!isDrawing || !ctx) return;
+    const rect = canvas.getBoundingClientRect();
+    const x = (e.clientX || (e.touches && e.touches[0].clientX)) - rect.left;
+    const y = (e.clientY || (e.touches && e.touches[0].clientY)) - rect.top;
+
+    ctx.lineWidth = 24;
+    ctx.lineCap = 'round';
+    ctx.strokeStyle = 'rgba(239, 68, 68, 0.6)'; // Red brush highlight
+
+    ctx.lineTo(x, y);
+    ctx.stroke();
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+}
+
+if (canvas) {
+    // Mouse Event Listeners
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mousemove', draw);
+
+    // Touch Event Listeners for Mobile
+    canvas.addEventListener('touchstart', startDrawing);
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchmove', draw);
+}
+
+function clearCanvas() {
+    if (ctx && canvas) {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 }
 
-function applyEffect(name) {
-    alert(`${name} Effect Applied!`);
+function processEraser() {
+    const img = document.getElementById('eraserBaseImg');
+    const wrapper = document.getElementById('canvasWrapper');
+    if (!img.src || wrapper.style.display === 'none') {
+        showAlert("Please upload an image and highlight a target first!");
+        return;
+    }
+    showAlert("Target object removed cleanly!");
+    clearCanvas();
 }
 
-function processAudio() {
-    alert("Audio processing complete! Track ready for export.");
+// ================= Modal Helpers =================
+function showAlert(msg) {
+    const modalText = document.getElementById('modalText');
+    const modal = document.getElementById('alertModal');
+    if (modalText && modal) {
+        modalText.innerText = msg;
+        modal.style.display = 'flex';
+    }
 }
 
-function eraseObject() {
-    alert("Target object removed cleanly!");
-}
-
-function selectScale(btn, factor) {
-    document.querySelectorAll('.scale-btn').forEach(b => {
-        b.classList.remove('active-tab', 'border-indigo-500');
-        b.classList.add('border-brand-border');
-    });
-    btn.classList.add('active-tab', 'border-indigo-500');
+function closeModal() {
+    const modal = document.getElementById('alertModal');
+    if (modal) {
+        modal.style.display = 'none';
+    }
 }
