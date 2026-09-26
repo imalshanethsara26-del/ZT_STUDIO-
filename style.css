@@ -1,0 +1,40 @@
+/* Custom Glows & 3D Tilt Effect for ZapStudio */
+.hero-tilt {
+    transform: perspective(1000px) rotateY(-10deg) rotateX(6deg) rotateZ(-3deg);
+    transition: all 0.5s ease-out;
+}
+.hero-tilt:hover {
+    transform: perspective(1000px) rotateY(-2deg) rotateX(2deg) rotateZ(0deg);
+}
+
+.active-tab {
+    background-color: rgba(99, 102, 241, 0.2);
+    color: #818CF8;
+    border-bottom: 2px solid #6366F1;
+}
+
+.platform-btn.active {
+    border-color: #6366F1;
+    background-color: rgba(99, 102, 241, 0.25);
+    color: #ffffff;
+}
+
+.effect-btn.active {
+    border-color: #818CF8;
+    background-color: rgba(99, 102, 241, 0.3);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0B0F19;
+}
+::-webkit-scrollbar-thumb {
+    background: #1E293B;
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #6366F1;
+}
