@@ -1,350 +1,214 @@
 <!DOCTYPE html>
-<html lang="en" class="dark">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ZapStudio - Creative AI Studio</title>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            darkMode: 'class',
-            theme: {
-                extend: {
-                    colors: {
-                        brand: {
-                            dark: '#080B11',
-                            card: '#0F1622',
-                            border: '#1E293B',
-                            accent: '#6366F1'
-                        }
-                    }
-                }
-            }
-        }
+    <!-- SEO Meta Tags -->
+    <title>ZapStudio - Free Online 4K Image Upscaler, Object Eraser & Audio Studio</title>
+    <meta name="description" content="ZapStudio is an all-in-one free AI creative studio. Upscale images to 4K without cropping, remove unwanted objects with canvas target brush, edit audio, and preview social media safe zones.">
+    <meta name="keywords" content="4k image upscaler, object eraser, photo enhancer, audio studio, social media safe zone, zapstudio">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://imalshanethsara26-del.github.io/">
+
+    <!-- Social Media Open Graph -->
+    <meta property="og:title" content="ZapStudio - All-in-One Creative Studio">
+    <meta property="og:description" content="Upscale Images to 4K, remove unwanted objects, edit audio, and check safe zones free online.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://imalshanethsara26-del.github.io/">
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "ZapStudio",
+      "url": "https://imalshanethsara26-del.github.io/",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All",
+      "offers": { "@type": "Offer", "price": "0" }
+    }
     </script>
+
+    <!-- Google Fonts & External CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
-<body class="bg-brand-dark text-slate-100 min-h-screen flex flex-col font-sans antialiased overflow-x-hidden">
+<body>
 
-    <!-- HEADER / NAVIGATION -->
-    <header class="border-b border-brand-border bg-brand-dark/95 backdrop-blur-md sticky top-0 z-50">
-        <div class="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-            <div class="flex items-center space-x-2.5 cursor-pointer" onclick="switchTab('home')">
-                <div class="p-2 bg-indigo-600 rounded-xl shadow-lg shadow-indigo-500/30">
-                    <i data-lucide="zap" class="w-5 h-5 text-white"></i>
-                </div>
-                <span class="text-xl font-black text-white tracking-tight">Zap<span class="text-indigo-500">Studio</span></span>
-            </div>
-
-            <nav class="hidden md:flex items-center space-x-1.5">
-                <button id="nav-home" onclick="switchTab('home')" class="nav-btn active-tab px-3.5 py-1.5 rounded-xl text-xs font-semibold transition flex items-center gap-2">
-                    <i data-lucide="home" class="w-4 h-4"></i> Home
-                </button>
-                <button id="nav-upscaler" onclick="switchTab('upscaler')" class="nav-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
-                    <i data-lucide="sparkles" class="w-4 h-4"></i> 4K Upscaler
-                </button>
-                <button id="nav-safezone" onclick="switchTab('safezone')" class="nav-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
-                    <i data-lucide="crop" class="w-4 h-4"></i> Safe Zone
-                </button>
-                <button id="nav-audio" onclick="switchTab('audio')" class="nav-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
-                    <i data-lucide="headphones" class="w-4 h-4"></i> Audio Studio
-                </button>
-                <button id="nav-eraser" onclick="switchTab('eraser')" class="nav-btn px-3.5 py-1.5 rounded-xl text-xs font-semibold text-slate-400 hover:text-white transition flex items-center gap-2">
-                    <i data-lucide="eraser" class="w-4 h-4"></i> Object Eraser
-                </button>
-            </nav>
-        </div>
+    <!-- Navigation Header -->
+    <header>
+        <div class="logo" onclick="switchTab('home')">⚡ ZapStudio</div>
+        <nav>
+            <button class="nav-btn active" onclick="switchTab('home')">Home</button>
+            <button class="nav-btn" onclick="switchTab('upscaler')">4K Upscaler</button>
+            <button class="nav-btn" onclick="switchTab('safe-zone')">Safe Zone</button>
+            <button class="nav-btn" onclick="switchTab('audio')">Audio Studio</button>
+            <button class="nav-btn" onclick="switchTab('eraser')">Object Eraser</button>
+        </nav>
     </header>
 
-    <!-- HIDDEN INPUTS FOR UPLOAD -->
-    <input type="file" accept="image/*" id="global-image-input" class="hidden" onchange="handleImageUpload(this)">
-    <input type="file" accept="audio/*" id="global-audio-input" class="hidden" onchange="handleAudioUpload(this)">
-
-    <!-- MAIN CONTENT CONTAINER -->
-    <main class="flex-grow max-w-7xl w-full mx-auto px-4 py-6">
-
-        <!-- ================= HOME TAB ================= -->
-        <section id="tab-home" class="tab-content block">
-            <div class="relative rounded-3xl bg-gradient-to-br from-brand-card via-brand-dark to-brand-card border border-brand-border p-6 md:p-10 mb-8 overflow-hidden shadow-2xl">
-                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                    
-                    <!-- Left Hero Intro -->
-                    <div class="lg:col-span-6 z-10 text-center lg:text-left">
-                        <span class="inline-block text-[10px] font-bold uppercase tracking-widest text-indigo-400 bg-indigo-500/10 px-3 py-1 rounded-full border border-indigo-500/20 mb-3">Welcome to ZapStudio</span>
-                        <h1 class="text-3xl md:text-5xl font-black text-white mb-3 leading-tight">
-                            Zap<span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-500">Studio</span>
-                        </h1>
-                        <p class="text-slate-300 font-semibold text-base mb-2">All-in-One Creative Studio for Images, Audio & Social Media</p>
-                        <p class="text-slate-400 text-xs md:text-sm mb-6 leading-relaxed max-w-lg mx-auto lg:mx-0">
-                            Upscale images to 4K, resize with social media safe zones, create amazing audio effects, and remove unwanted objects — free in your browser.
-                        </p>
-                        <div class="flex flex-wrap justify-center lg:justify-start gap-3">
-                            <button onclick="switchTab('upscaler')" class="bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-500 hover:to-purple-500 text-white font-bold text-xs px-6 py-3 rounded-xl shadow-lg shadow-indigo-500/25 transition flex items-center gap-2">
-                                Start Creating <i data-lucide="arrow-right" class="w-4 h-4"></i>
-                            </button>
-                            <button onclick="switchTab('safezone')" class="bg-slate-800/80 hover:bg-slate-700 text-slate-200 font-semibold text-xs px-6 py-3 rounded-xl border border-brand-border transition">
-                                Explore Tools
-                            </button>
-                        </div>
+    <main>
+        <!-- HOME TAB -->
+        <section id="home" class="tab-content active">
+            <div class="hero-section">
+                <div class="hero-text">
+                    <span class="welcome-badge">WELCOME TO</span>
+                    <h1>ZapStudio</h1>
+                    <h2>All-in-One Creative Studio for Images, Audio & Social Media</h2>
+                    <p>Upscale Images to 4K, resize with social media safe zones, create amazing audio effects, and remove unwanted objects — all in your browser, free and easy to use.</p>
+                    <div class="hero-btns">
+                        <button class="btn-primary" onclick="switchTab('upscaler')">Start Creating &rarr;</button>
+                        <button class="btn-secondary" onclick="document.getElementById('tools-grid').scrollIntoView({behavior: 'smooth'})">Explore Tools</button>
                     </div>
-
-                    <!-- Right Tilted 3D Showcase (Responsive Grid) -->
-                    <div class="lg:col-span-6 relative flex justify-center items-center">
-                        <div class="hero-tilt grid grid-cols-2 gap-3 max-w-md w-full p-2">
-                            <!-- Demo Card 1: 4K Mountain Image -->
-                            <div class="col-span-2 relative rounded-2xl overflow-hidden border border-indigo-500/30 shadow-xl h-44 bg-slate-900 group">
-                                <img src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=800&q=80" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex items-end p-3 justify-between">
-                                    <span class="text-[9px] bg-black/60 px-2 py-0.5 rounded text-slate-300">Before (720p)</span>
-                                    <span class="text-[9px] bg-indigo-600 px-2 py-0.5 rounded text-white font-bold">After 4K</span>
-                                </div>
-                            </div>
-                            <!-- Demo Card 2: Social Icons Grid -->
-                            <div class="bg-brand-card border border-brand-border p-3.5 rounded-2xl flex items-center justify-around shadow-lg">
-                                <i data-lucide="youtube" class="w-5 h-5 text-red-500"></i>
-                                <i data-lucide="instagram" class="w-5 h-5 text-pink-500"></i>
-                                <i data-lucide="smartphone" class="w-5 h-5 text-cyan-400"></i>
-                                <i data-lucide="facebook" class="w-5 h-5 text-blue-500"></i>
-                            </div>
-                            <!-- Demo Card 3: Audio Waveform Preview -->
-                            <div class="bg-brand-card border border-brand-border p-3.5 rounded-2xl flex items-center gap-2.5 shadow-lg">
-                                <div class="p-2 bg-indigo-500/20 rounded-lg">
-                                    <i data-lucide="headphones" class="w-4 h-4 text-indigo-400"></i>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-bold text-white">8D Surround</div>
-                                    <div class="text-[8px] text-slate-400">Audio Remaster</div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                </div>
+                <div class="hero-preview">
+                    <div class="preview-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80" alt="4K Upscale Preview"></div>
+                    <div class="preview-card"><img src="https://images.unsplash.com/photo-1511671782779-c97d3d27a1d4?auto=format&fit=crop&w=500&q=80" alt="Audio Wave Studio"></div>
+                    <div class="preview-card"><img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=500&q=80" alt="Object Removal Preview"></div>
+                    <div class="preview-card"><img src="https://images.unsplash.com/photo-1614680376593-902f749f71c3?auto=format&fit=crop&w=500&q=80" alt="Safe Zone Preview"></div>
                 </div>
             </div>
 
-            <!-- Bottom 4 Feature Cards Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-                <div onclick="switchTab('upscaler')" class="bg-brand-card border border-brand-border hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition group">
-                    <div class="p-2.5 bg-indigo-500/10 w-fit rounded-xl mb-3 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition">
-                        <i data-lucide="sparkles" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-white mb-1">4K Image Upscaler</h3>
-                    <p class="text-slate-400 text-xs">Enhance and upscale images with AI clarity.</p>
+            <div id="tools-grid" class="tools-grid">
+                <div class="tool-card" onclick="switchTab('upscaler')">
+                    <div class="tool-icon">🖼️</div>
+                    <h3>4K Image Upscaler</h3>
+                    <p>Enhance and upscale your low-res photos into crisp 4K quality with AI clarity.</p>
                 </div>
-                <div onclick="switchTab('safezone')" class="bg-brand-card border border-brand-border hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition group">
-                    <div class="p-2.5 bg-indigo-500/10 w-fit rounded-xl mb-3 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition">
-                        <i data-lucide="crop" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-white mb-1">Social Safe Zone</h3>
-                    <p class="text-slate-400 text-xs">Perfectly resize photos for social media.</p>
+                <div class="tool-card" onclick="switchTab('safe-zone')">
+                    <div class="tool-icon">📐</div>
+                    <h3>Social Media Safe Zone</h3>
+                    <p>Perfectly fit and preview your posts for TikTok, Instagram Reels, and YouTube Shorts.</p>
                 </div>
-                <div onclick="switchTab('audio')" class="bg-brand-card border border-brand-border hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition group">
-                    <div class="p-2.5 bg-indigo-500/10 w-fit rounded-xl mb-3 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition">
-                        <i data-lucide="headphones" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-white mb-1">Audio Studio</h3>
-                    <p class="text-slate-400 text-xs">Create 8D, slowed, reverb audio tracks.</p>
+                <div class="tool-card" onclick="switchTab('audio')">
+                    <div class="tool-icon">🎧</div>
+                    <h3>Audio Studio</h3>
+                    <p>Create 8D audio, slowed + reverb, bassboost, and voice effects effortlessly.</p>
                 </div>
-                <div onclick="switchTab('eraser')" class="bg-brand-card border border-brand-border hover:border-indigo-500/50 p-5 rounded-2xl cursor-pointer transition group">
-                    <div class="p-2.5 bg-indigo-500/10 w-fit rounded-xl mb-3 text-indigo-400 group-hover:bg-indigo-600 group-hover:text-white transition">
-                        <i data-lucide="eraser" class="w-5 h-5"></i>
-                    </div>
-                    <h3 class="text-sm font-bold text-white mb-1">Object Eraser</h3>
-                    <p class="text-slate-400 text-xs">Remove unwanted objects or logos easily.</p>
+                <div class="tool-card" onclick="switchTab('eraser')">
+                    <div class="tool-icon">💊</div>
+                    <h3>Object Eraser</h3>
+                    <p>Highlight and remove unwanted objects, people, logos & watermarks cleanly.</p>
                 </div>
             </div>
         </section>
 
-        <!-- ================= 4K UPSCALER TAB ================= -->
-        <section id="tab-upscaler" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                
-                <!-- Left Before/After Draggable Slider View -->
-                <div class="lg:col-span-8 bg-brand-card border border-brand-border rounded-2xl p-4 flex flex-col justify-center">
-                    <div class="relative w-full h-[320px] sm:h-[420px] bg-black rounded-xl overflow-hidden select-none" id="slider-container">
-                        <!-- After Image (Background) -->
-                        <img id="upscale-after-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 w-full h-full object-cover">
-                        
-                        <!-- Before Image (Clipped) -->
-                        <div id="before-crop-wrap" class="absolute inset-y-0 left-0 w-1/2 overflow-hidden border-r-2 border-indigo-500 shadow-2xl">
-                            <img id="upscale-before-img" src="https://images.unsplash.com/photo-1464822759023-fed622ff2c3b?auto=format&fit=crop&w=1200&q=80" class="absolute inset-0 h-full max-w-none object-cover filter blur-[0.6px] brightness-90">
-                        </div>
+        <!-- 4K UPSCALER TAB -->
+        <section id="upscaler" class="tab-content">
+            <div class="tool-container">
+                <h2>4K Image Upscaler</h2>
+                <p class="tool-subtitle">Upscale low-res photos into crisp 4K quality without distorting dimensions.</p>
 
-                        <!-- Touch/Mouse Slider Range Input -->
-                        <input type="range" min="0" max="100" value="50" class="absolute inset-0 w-full h-full opacity-0 cursor-ew-resize z-30" oninput="handleCompareSlider(this.value)">
-
-                        <!-- Visual Divider Handle -->
-                        <div id="slider-handle" class="absolute top-0 bottom-0 left-1/2 -translate-x-1/2 w-0.5 bg-indigo-400 z-20 pointer-events-none flex items-center justify-center">
-                            <div class="w-7 h-7 rounded-full bg-indigo-600 border-2 border-white flex items-center justify-center shadow-lg text-white font-bold text-[10px]">
-                                &#10094;&#10095;
-                            </div>
-                        </div>
-
-                        <div class="absolute bottom-3 left-3 bg-black/70 text-slate-300 text-[10px] px-2.5 py-1 rounded-md backdrop-blur z-10">Before (720p)</div>
-                        <div class="absolute bottom-3 right-3 bg-indigo-600/90 text-white font-bold text-[10px] px-2.5 py-1 rounded-md backdrop-blur z-10">After (4K)</div>
+                <div class="image-display-area" id="upscaleArea">
+                    <div id="upscalePlaceholder" class="placeholder-text">
+                        <p>📁 Upload an image to preview</p>
                     </div>
+                    <img id="upscaleImgPreview" src="" alt="4K Preview" style="display: none;">
                 </div>
 
-                <!-- Right Controls & Upload/Download -->
-                <div class="lg:col-span-4 bg-brand-card border border-brand-border rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-lg font-bold text-white mb-1">4K Image Upscaler</h2>
-                        <p class="text-slate-400 text-xs mb-5">Upscale low-res photos into crisp 4K quality.</p>
+                <div class="upload-box" onclick="document.getElementById('upscaleInput').click()">
+                    <p class="upload-title">☁️ Click to Upload Your Image</p>
+                    <p class="upload-desc">Supports JPG, PNG, WEBP</p>
+                    <input type="file" id="upscaleInput" accept="image/*" style="display: none;" onchange="handleUpscaleUpload(event)">
+                </div>
 
-                        <!-- Upload Box -->
-                        <div onclick="triggerImageUpload()" class="border-2 border-dashed border-brand-border hover:border-indigo-500/60 rounded-xl p-5 text-center cursor-pointer transition mb-5 bg-brand-dark/40">
-                            <i data-lucide="upload-cloud" class="w-7 h-7 text-indigo-400 mx-auto mb-2"></i>
-                            <p class="text-xs text-slate-200 font-semibold">Click to Upload Your Image</p>
-                            <span class="text-[10px] text-slate-500">Supports JPG, PNG, WEBP</span>
-                        </div>
-
-                        <!-- Upscale Options -->
-                        <div class="mb-5">
-                            <label class="text-xs font-semibold text-slate-300 block mb-2">Upscale Factor</label>
-                            <div class="grid grid-cols-3 gap-2">
-                                <button onclick="selectScale(this, 2)" class="scale-btn border border-brand-border py-2 rounded-lg text-xs font-bold text-slate-300">2X</button>
-                                <button onclick="selectScale(this, 4)" class="scale-btn active-tab border border-indigo-500 py-2 rounded-lg text-xs font-bold text-white">4X</button>
-                                <button onclick="selectScale(this, 8)" class="scale-btn border border-brand-border py-2 rounded-lg text-xs font-bold text-slate-300">8X</button>
-                            </div>
-                        </div>
+                <div class="control-panel">
+                    <label class="panel-label">Upscale Factor</label>
+                    <div class="scale-options">
+                        <button class="scale-btn" onclick="setScale(this)">2X</button>
+                        <button class="scale-btn active" onclick="setScale(this)">4X</button>
+                        <button class="scale-btn" onclick="setScale(this)">8X</button>
                     </div>
-
-                    <!-- Process & Download Buttons -->
-                    <div class="space-y-2">
-                        <button id="process-btn" onclick="processAndUpscaleImage()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition shadow-lg shadow-indigo-500/20 flex items-center justify-center gap-2">
-                            <i data-lucide="sparkles" class="w-4 h-4"></i> Upscale Image
-                        </button>
-                        <a id="download-link" class="hidden w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-3 rounded-xl transition text-center flex items-center justify-center gap-2 shadow-lg shadow-emerald-500/20">
-                            <i data-lucide="download" class="w-4 h-4"></i> Download 4K Image
-                        </a>
-                    </div>
+                    <button class="btn-primary full-width" onclick="downloadUpscaled()">⬇️ Download 4K Image</button>
                 </div>
             </div>
         </section>
 
-        <!-- ================= SAFE ZONE TAB ================= -->
-        <section id="tab-safezone" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-4 bg-brand-card border border-brand-border rounded-2xl p-5">
-                    <h2 class="text-lg font-bold text-white mb-1">Select Platform</h2>
-                    <p class="text-slate-400 text-xs mb-4">Aspect ratio safe zones</p>
+        <!-- OBJECT ERASER TAB -->
+        <section id="eraser" class="tab-content">
+            <div class="tool-container">
+                <h2>Object Eraser</h2>
+                <p class="tool-subtitle">Draw over the target object with your mouse/finger to highlight & erase it.</p>
 
-                    <div class="space-y-2">
-                        <button onclick="setSafeZone('youtube')" class="sz-btn w-full border border-indigo-500 bg-indigo-500/10 p-3 rounded-xl text-left text-xs font-medium text-white flex items-center gap-3">
-                            <i data-lucide="youtube" class="w-5 h-5 text-red-500"></i> YouTube Thumbnail (16:9)
-                        </button>
-                        <button onclick="setSafeZone('instagram')" class="sz-btn w-full border border-brand-border p-3 rounded-xl text-left text-xs font-medium text-slate-300 flex items-center gap-3">
-                            <i data-lucide="instagram" class="w-5 h-5 text-pink-500"></i> Instagram Post (1:1)
-                        </button>
-                        <button onclick="setSafeZone('tiktok')" class="sz-btn w-full border border-brand-border p-3 rounded-xl text-left text-xs font-medium text-slate-300 flex items-center gap-3">
-                            <i data-lucide="smartphone" class="w-5 h-5 text-cyan-400"></i> TikTok / Reels (9:16)
-                        </button>
+                <div class="image-display-area min-height-350">
+                    <div id="eraserPlaceholder" class="placeholder-text">
+                        <p>📁 Upload an image to start brushing objects</p>
                     </div>
-
-                    <button onclick="triggerImageUpload()" class="w-full mt-6 bg-slate-800 hover:bg-slate-700 text-slate-200 font-semibold text-xs py-2.5 rounded-xl border border-brand-border transition">
-                        Upload Custom Photo
-                    </button>
+                    <div class="canvas-wrapper" id="canvasWrapper" style="display: none;">
+                        <img id="eraserBaseImg" src="" alt="Target Image">
+                        <canvas id="maskCanvas"></canvas>
+                    </div>
                 </div>
 
-                <div class="lg:col-span-8 bg-brand-card border border-brand-border rounded-2xl p-6 flex items-center justify-center min-h-[350px]">
-                    <div id="safezone-bg" class="relative w-full h-80 rounded-xl overflow-hidden bg-cover bg-center flex items-center justify-center transition-all" style="background-image: url('https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80');">
-                        <div id="safezone-box" class="border-2 border-dashed border-emerald-400 bg-emerald-500/10 rounded-lg flex items-center justify-center w-[85%] h-[80%] backdrop-blur-[1px]">
-                            <span class="text-[10px] font-mono font-bold text-emerald-300 bg-black/80 px-3 py-1 rounded-full border border-emerald-500/30">SAFE ZONE COVERAGE</span>
-                        </div>
-                    </div>
+                <div class="upload-box" onclick="document.getElementById('eraserInput').click()">
+                    <p class="upload-title">☁️ Upload Image for Object Removal</p>
+                    <input type="file" id="eraserInput" accept="image/*" style="display: none;" onchange="handleEraserUpload(event)">
+                </div>
+
+                <div class="eraser-controls">
+                    <button class="btn-secondary" onclick="clearCanvas()">🧹 Clear Target Highlight</button>
+                    <button class="btn-primary" onclick="processEraser()">✨ Remove Target Object</button>
                 </div>
             </div>
         </section>
 
-        <!-- ================= AUDIO STUDIO TAB ================= -->
-        <section id="tab-audio" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-7 bg-brand-card border border-brand-border rounded-2xl p-6 flex flex-col justify-between min-h-[320px]">
-                    <div>
-                        <h2 class="text-lg font-bold text-white mb-1">Audio Studio</h2>
-                        <p class="text-slate-400 text-xs mb-4">Apply 8D Surround, Bass Boost & Effects</p>
-                    </div>
-                    
-                    <div class="h-28 flex items-center justify-center gap-2 px-4 bg-brand-dark/80 rounded-xl border border-brand-border">
-                        <div class="w-1.5 h-10 bg-indigo-500 rounded-full animate-pulse"></div>
-                        <div class="w-1.5 h-16 bg-purple-500 rounded-full animate-pulse"></div>
-                        <div class="w-1.5 h-8 bg-pink-500 rounded-full animate-pulse"></div>
-                        <div class="w-1.5 h-20 bg-indigo-400 rounded-full animate-pulse"></div>
-                        <div class="w-1.5 h-12 bg-purple-400 rounded-full animate-pulse"></div>
-                    </div>
-
-                    <div class="text-center text-xs text-slate-400 mt-3" id="audio-file-label">Default Demo Audio Track</div>
-                </div>
-
-                <div class="lg:col-span-5 bg-brand-card border border-brand-border rounded-2xl p-5 flex flex-col justify-between">
-                    <div onclick="triggerAudioUpload()" class="border-2 border-dashed border-brand-border hover:border-indigo-500/60 rounded-xl p-4 text-center cursor-pointer transition mb-4 bg-brand-dark/40">
-                        <p class="text-xs text-slate-300 font-semibold">Click to Upload MP3 / WAV Audio</p>
-                    </div>
-
-                    <div class="grid grid-cols-2 gap-2.5 mb-4">
-                        <button onclick="applyEffect('8D Audio')" class="border border-indigo-500 bg-indigo-500/20 p-2.5 rounded-xl text-xs font-bold text-white">8D Audio</button>
-                        <button onclick="applyEffect('Slowed + Reverb')" class="border border-brand-border p-2.5 rounded-xl text-xs font-bold text-slate-300">Slowed + Reverb</button>
-                        <button onclick="applyEffect('Bass Boost')" class="border border-brand-border p-2.5 rounded-xl text-xs font-bold text-slate-300">Bass Boost</button>
-                        <button onclick="applyEffect('Nightcore')" class="border border-brand-border p-2.5 rounded-xl text-xs font-bold text-slate-300">Nightcore</button>
-                    </div>
-
-                    <button onclick="processAudio()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
-                        Process Audio Track <i data-lucide="play" class="w-4 h-4"></i>
-                    </button>
-                </div>
+        <!-- SAFE ZONE TAB -->
+        <section id="safe-zone" class="tab-content">
+            <div class="tool-container text-center">
+                <h2>Social Media Safe Zone</h2>
+                <p class="tool-subtitle">Preview overlays for TikTok, Instagram Reels & YouTube Shorts UI elements.</p>
             </div>
         </section>
 
-        <!-- ================= OBJECT ERASER TAB ================= -->
-        <section id="tab-eraser" class="tab-content hidden">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                <div class="lg:col-span-8 bg-brand-card border border-brand-border rounded-2xl p-4 flex items-center justify-center min-h-[350px]">
-                    <div class="relative w-full h-[320px] bg-black rounded-xl overflow-hidden flex items-center justify-center">
-                        <img id="eraser-img" src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=80" class="max-h-full max-w-full object-contain">
-                    </div>
-                </div>
-
-                <div class="lg:col-span-4 bg-brand-card border border-brand-border rounded-2xl p-5 flex flex-col justify-between">
-                    <div>
-                        <h2 class="text-lg font-bold text-white mb-1">Object Eraser</h2>
-                        <p class="text-slate-400 text-xs mb-5">Remove watermarks or logos cleanly.</p>
-
-                        <div onclick="triggerImageUpload()" class="border-2 border-dashed border-brand-border hover:border-indigo-500/60 rounded-xl p-4 text-center cursor-pointer transition mb-4 bg-brand-dark/40">
-                            <p class="text-xs text-slate-300 font-semibold">Upload Photo</p>
-                        </div>
-                    </div>
-
-                    <button onclick="eraseObject()" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-3 rounded-xl transition flex items-center justify-center gap-2">
-                        Remove Selected Object <i data-lucide="sparkles" class="w-4 h-4"></i>
-                    </button>
-                </div>
+        <!-- AUDIO STUDIO TAB -->
+        <section id="audio" class="tab-content">
+            <div class="tool-container text-center">
+                <h2>Audio Studio</h2>
+                <p class="tool-subtitle">Upload audio to apply 8D audio, slowed + reverb, and bassboost filters.</p>
             </div>
         </section>
-
     </main>
 
-    <!-- FOOTER -->
-    <footer class="border-t border-brand-border bg-brand-dark/90 py-6 mt-12">
-        <div class="max-w-7xl mx-auto px-4 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-            <div class="flex items-center space-x-2">
-                <div class="p-1.5 bg-indigo-600 rounded-lg">
-                    <i data-lucide="zap" class="w-4 h-4 text-white"></i>
-                </div>
-                <span class="font-bold text-white">ZapStudio</span>
-                <span>© 2026. All rights reserved.</span>
+    <!-- Modal Notification Popup -->
+    <div class="modal" id="alertModal">
+        <div class="modal-content">
+            <p id="modalText">Target object removed cleanly!</p>
+            <button class="btn-primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <div class="logo">⚡ ZapStudio</div>
+                <p>All-in-one browser-based creative suite for AI image upscaling, object eraser, audio effects, and social media safe zones.</p>
             </div>
-            <div class="flex items-center space-x-6">
-                <a href="#" onclick="switchTab('home')" class="hover:text-white transition">Home</a>
-                <a href="#" onclick="switchTab('upscaler')" class="hover:text-white transition">4K Upscaler</a>
-                <a href="#" onclick="switchTab('safezone')" class="hover:text-white transition">Safe Zone</a>
-                <a href="#" onclick="switchTab('audio')" class="hover:text-white transition">Audio Studio</a>
+            <div class="footer-col">
+                <h4>Tools</h4>
+                <ul>
+                    <li><a href="#" onclick="switchTab('upscaler')">4K Image Upscaler</a></li>
+                    <li><a href="#" onclick="switchTab('safe-zone')">Social Media Safe Zone</a></li>
+                    <li><a href="#" onclick="switchTab('audio')">Audio Studio</a></li>
+                    <li><a href="#" onclick="switchTab('eraser')">Object Eraser</a></li>
+                </ul>
             </div>
+            <div class="footer-col">
+                <h4>Legal & Links</h4>
+                <ul>
+                    <li><a href="#" onclick="switchTab('home')">Home</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ZapStudio. All rights reserved.</p>
         </div>
     </footer>
 
+    <!-- JavaScript File -->
     <script src="app.js"></script>
 </body>
 </html>
